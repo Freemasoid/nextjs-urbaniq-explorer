@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Send } from "lucide-react";
+import { useTranslation } from "@/i18n/useTranslation";
 
 interface Message {
   id: string;
@@ -12,11 +13,12 @@ interface Message {
 
 const Chat: React.FC = () => {
   const [input, setInput] = useState("");
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       sender: "ai",
-      content: "Hello! How can I assist you today?",
+      content: t("chat.assist"),
       timestamp: new Date(),
     },
   ]);
@@ -49,9 +51,9 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)]">
-      <div className="flex-1 overflow-y-auto pb-4 px-1">
-        <div className="space-y-4">
+    <div className="flex flex-col w-full">
+      <div className="flex overflow-y-auto justify-between h-full pb-4 px-1">
+        <div className="space-y-5 w-full">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -79,14 +81,14 @@ const Chat: React.FC = () => {
 
       <form
         onSubmit={handleSendMessage}
-        className="border-t pt-4 sticky bottom-0 bg-background"
+        className="pt-4 sticky bg-background"
       >
-        <div className="flex gap-2">
+        <div className="flex gap-2 px-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask your guide..."
+            placeholder={t("chat.askGuide")}
             className="flex-1 rounded-full border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button
