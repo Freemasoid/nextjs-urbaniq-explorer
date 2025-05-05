@@ -18,8 +18,8 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
     <div className="flex flex-col min-h-screen pb-16">
       {/* Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
-        <div className="container flex h-14 items-center">
-          <div className="flex flex-1 items-center justify-between">
+        <div className="container flex w-full h-14 items-center">
+          <div className="flex flex-1 items-center justify-between px-4">
             <Logo />
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -33,7 +33,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container py-4">{children}</main>
+      <main className="flex flex-1 container py-4 px-4">{children}</main>
 
       {/* Bottom Navigation Bar */}
       <nav className="mobile-nav">
