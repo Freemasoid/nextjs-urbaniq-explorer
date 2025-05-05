@@ -46,7 +46,7 @@ const SAMPLE_TOURS: Tour[] = [
 
 const ToursPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [tours, setTours] = useState<Tour[]>(SAMPLE_TOURS);
+  const [tours] = useState<Tour[]>(SAMPLE_TOURS);
   const { t } = useTranslation();
 
   const filteredTours = tours.filter(
