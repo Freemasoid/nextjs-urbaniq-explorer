@@ -18,7 +18,19 @@ export const enUS = {
     countryPlaceholder: "e.g. Germany",
     travelSuggestions: "Travel Suggestions",
   },
-  tours: {},
+  tours: {
+    yourTours: "Your Tours",
+    searchBy: "Search by city or country",
+    noToursFound:
+      "No tours found. Try a different search or create a new tour.",
+    createTour: "Create New Tour",
+  },
+  tourDetail: {
+    backToTours: "Back to Tours",
+    noTourFound: "Tour not found",
+    saveToFavorites: "Save to Favorites",
+    shareTour: "Share Tour",
+  },
   profile: {},
   errors: {
     cityCountryEmpty: "Please enter both city and country",
