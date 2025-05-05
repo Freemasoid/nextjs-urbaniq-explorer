@@ -28,7 +28,7 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>
             <LanguageProvider>
-              <ThemeProvider defaultTheme="light">
+              <ThemeProvider>
                 <TooltipProvider>
                   <ResponsiveLayout>{children}</ResponsiveLayout>
                   <Toaster />
