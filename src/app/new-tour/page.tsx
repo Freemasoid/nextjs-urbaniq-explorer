@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useRouter } from "next/navigation";
@@ -10,7 +9,6 @@ const NewTour: React.FC = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname();
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -107,7 +105,7 @@ const NewTour: React.FC = () => {
           </li>
           <li className="flex gap-2">
             <span className="text-primary">•</span>
-            <span>Barcelona, Spain - Gaudi's Masterpieces</span>
+            <span>Barcelona, Spain - Gaudi&apos;s Masterpieces</span>
           </li>
           <li className="flex gap-2">
             <span className="text-primary">•</span>
