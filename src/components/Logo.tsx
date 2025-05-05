@@ -17,7 +17,7 @@ const Logo: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
-      <span className="font-bold text-xl hidden sm:block">
+      <span className="font-bold text-xl sm:block">
         <span className="text-explorer-yellow text-shadow-md text-shadow-gray-700">
           UrbanIQ
         </span>{" "}
