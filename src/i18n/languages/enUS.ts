@@ -2,6 +2,9 @@ export const enUS = {
   chat: {
     askGuide: "Ask your guide ...",
     assist: "Hello! How can I assist you today?",
+    travelAssistant: "Travel Assistant",
+    travelAssistantDescription:
+      "Ask me about your travel plans! I'll help you plan your trip!",
   },
   newTour: {
     generateTour: "Generate Tour",
@@ -31,7 +34,12 @@ export const enUS = {
     saveToFavorites: "Save to Favorites",
     shareTour: "Share Tour",
   },
-  profile: {},
+  nav: {
+    chat: "Chat",
+    newTour: "New Tour",
+    tours: "Tours",
+    profile: "Profile",
+  },
   errors: {
     cityCountryEmpty: "Please enter both city and country",
   },
