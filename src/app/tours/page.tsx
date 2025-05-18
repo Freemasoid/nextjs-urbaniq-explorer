@@ -57,32 +57,34 @@ const ToursPage: React.FC = () => {
   );
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold mb-6">{t("tours.yourTours")}</h1>
+    <div>
+      <h1 className="text-2xl md:text-3xl font-bold mb-6">Your Tours</h1>
 
-      <div className="relative mb-6">
+      <div className="relative mb-6 max-w-md">
         <Search
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
           size={18}
         />
         <input
           type="text"
-          placeholder={t("tours.searchBy")}
+          placeholder="Search by city or country"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full rounded-full border pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </div>
 
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTours.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">{t("tours.noToursFound")}</p>
+          <div className="text-center py-8 col-span-full">
+            <p className="text-muted-foreground">
+              No tours found. Try a different search or create a new tour.
+            </p>
             <Link
               href="/new-tour"
               className="btn-primary inline-block mt-4"
             >
-              {t("tours.createTour")}
+              Create New Tour
             </Link>
           </div>
         ) : (
@@ -92,12 +94,12 @@ const ToursPage: React.FC = () => {
               key={tour.id}
               className="block"
             >
-              <div className="tour-card hover:border-primary p-4">
+              <div className="tour-card hover:border-primary p-4 h-full">
                 <h2 className="font-semibold text-lg">{tour.title}</h2>
-                <p className="text-muted-foreground text-sm mt-1 line-clamp-2">
+                <p className="text-muted-foreground text-sm mt-1 line-clamp-3">
                   {tour.description}
                 </p>
-                <div className="flex gap-2 mt-3">
+                <div className="flex flex-wrap gap-2 mt-3">
                   {tour.tags.map((tag) => (
                     <span
                       key={tag}
