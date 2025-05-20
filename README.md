@@ -2,8 +2,6 @@
 
 UrbanIQ Explorer is an AI-powered city guide application that helps users discover interesting places and plan personalized city tours.
 
-**CURRENTLY LIMITED FOR MOBILE VIEW**
-
 Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 
 ## Features
