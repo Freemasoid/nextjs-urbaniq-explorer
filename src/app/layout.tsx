@@ -6,10 +6,10 @@ import { Toaster as Sonner } from "@/components/ui/Sonner";
 import { TooltipProvider } from "@/components/ui/Tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/hooks/use-theme";
-import { ResponsiveLayout } from "@/layouts/ResponsiveLayout";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { Provider } from "react-redux";
 import { store } from "@/lib/store";
+import { ResponsiveLayout } from "@/layouts/ResponsiveLayout";
 
 // Initialize the query client
 const queryClient = new QueryClient();

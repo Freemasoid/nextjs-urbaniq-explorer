@@ -1,4 +1,21 @@
 export const enUS = {
+  index: {
+    tagline: "Your AI-driven guide to uncovering fascinating city destinations",
+    cta: "Let's get started!",
+    features: {
+      title: "Features",
+      list: [
+        "Chat with our AI to create personalized tours",
+        "Explore curated city destinations",
+        "Save your favorite tours for later",
+        "Get local insights and hidden gems",
+      ],
+    },
+    copyright: "All rights reserved.",
+    terms: "Terms",
+    privacy: "Privacy",
+    help: "Help",
+  },
   chat: {
     askGuide: "Ask your guide ...",
     assist: "Hello! How can I assist you today?",
