@@ -9,6 +9,12 @@ interface MobileLayoutProps {
 
 const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // For home page, render children directly without header/navbar
+  if (isHomePage) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">

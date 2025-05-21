@@ -3,12 +3,21 @@
 import React from "react";
 import { DesktopSidebar } from "@/components";
 import { Header } from "@/components/ui";
+import { usePathname } from "next/navigation";
 
 interface DesktopLayoutProps {
   children: React.ReactNode;
 }
 
 const DesktopLayout: React.FC<DesktopLayoutProps> = ({ children }) => {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // For home page, render children directly without the app layout
+  if (isHomePage) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
