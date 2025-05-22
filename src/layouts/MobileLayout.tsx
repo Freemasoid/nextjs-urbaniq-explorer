@@ -17,15 +17,16 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header */}
+    <div className="flex flex-col h-[100dvh]">
       <Header />
 
-      {/* Main Content */}
-      <main className="flex flex-1 py-4 px-4">{children}</main>
+      <main className="flex-1 overflow-auto pb-16">
+        <div className="py-4 px-4">{children}</div>
+      </main>
 
-      {/* Bottom Navigation Bar */}
-      <MobileNavbar />
+      <div className="fixed bottom-0 left-0 right-0 z-10">
+        <MobileNavbar />
+      </div>
     </div>
   );
 };
