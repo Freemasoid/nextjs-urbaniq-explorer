@@ -4,7 +4,7 @@ import { SignIn } from "@clerk/nextjs";
 import { useTranslation } from "@/i18n/useTranslation";
 import { toast } from "@/components/ui";
 import { useRouter } from "next/navigation";
-import { useClerk, useSignIn } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { Button } from "@/components/ui";
 
 function SignInPage() {
@@ -43,6 +43,13 @@ function SignInPage() {
         </div>
 
         <div>
+          <Button
+            className="w-full mb-4 shadow-md shadow-accent/20 active:shadow-none transition-shadow duration-150"
+            onClick={handleDemoLogin}
+          >
+            Sign in as Demo User
+          </Button>
+
           <SignIn
             appearance={{
               elements: {
@@ -63,14 +70,8 @@ function SignInPage() {
               },
             }}
             signUpUrl="/sign-up"
+            fallbackRedirectUrl="/chat"
           />
-
-          <Button
-            className="w-full mt-4"
-            onClick={handleDemoLogin}
-          >
-            Sign in as Demo User
-          </Button>
         </div>
       </div>
     </div>
