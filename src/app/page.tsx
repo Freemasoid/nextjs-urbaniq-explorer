@@ -98,33 +98,6 @@ const Index: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="py-6 border-t bg-card">
-        <div className="container flex m-auto flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-muted-foreground">
-          <p>© 2025 UrbanIQ Explorer. {t("index.copyright")}</p>
-          <div className="flex items-center gap-6">
-            <a
-              href="#"
-              className="hover:text-foreground transition-colors"
-            >
-              {t("index.terms")}
-            </a>
-            <a
-              href="#"
-              className="hover:text-foreground transition-colors"
-            >
-              {t("index.privacy")}
-            </a>
-            <a
-              href="#"
-              className="hover:text-foreground transition-colors"
-            >
-              {t("index.help")}
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

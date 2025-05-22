@@ -35,6 +35,7 @@ function SignUpPage() {
               },
             }}
             signInUrl="/sign-in"
+            fallbackRedirectUrl="/chat"
           />
         </div>
       </div>
