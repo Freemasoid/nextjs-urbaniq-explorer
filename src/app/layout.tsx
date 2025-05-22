@@ -1,9 +1,7 @@
 "use client";
 
 import "./globals.css";
-import { Toaster } from "@/components/ui/Toaster";
-import { Toaster as Sonner } from "@/components/ui/Sonner";
-import { TooltipProvider } from "@/components/ui/Tooltip";
+import { Toaster, TooltipProvider } from "@/components/ui";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { LanguageProvider } from "@/i18n/LanguageContext";
@@ -32,7 +30,6 @@ export default function RootLayout({
                 <TooltipProvider>
                   <ResponsiveLayout>{children}</ResponsiveLayout>
                   <Toaster />
-                  <Sonner />
                 </TooltipProvider>
               </ThemeProvider>
             </LanguageProvider>
