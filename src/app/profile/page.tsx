@@ -4,7 +4,7 @@ import React from "react";
 import { User, Settings, LogOut, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/hooks/use-theme";
-import { toast } from "sonner";
+import { toast } from "@/components/ui";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
