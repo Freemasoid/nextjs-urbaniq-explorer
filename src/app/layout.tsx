@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/i18n/LanguageContext";
 import { Provider } from "react-redux";
 import { store } from "@/lib/store";
 import { ResponsiveLayout } from "@/layouts/ResponsiveLayout";
+import { ClerkProvider } from "@clerk/nextjs";
 
 // Initialize the query client
 const queryClient = new QueryClient();
@@ -18,24 +19,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-    >
-      <body>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <LanguageProvider>
-              <ThemeProvider>
-                <TooltipProvider>
-                  <ResponsiveLayout>{children}</ResponsiveLayout>
-                  <Toaster />
-                </TooltipProvider>
-              </ThemeProvider>
-            </LanguageProvider>
-          </Provider>
-        </QueryClientProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        suppressHydrationWarning
+      >
+        <body>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              <LanguageProvider>
+                <ThemeProvider>
+                  <TooltipProvider>
+                    <ResponsiveLayout>{children}</ResponsiveLayout>
+                    <Toaster />
+                  </TooltipProvider>
+                </ThemeProvider>
+              </LanguageProvider>
+            </Provider>
+          </QueryClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
