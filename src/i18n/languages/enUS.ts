@@ -1,4 +1,11 @@
 export const enUS = {
+  auth: {
+    signInAccount: "Sign in to your account",
+    createAccount: "Create an account",
+    demoLogin: "Demo Login",
+    demoLoginDescription: "Logged in as demo user",
+    errorDemoLogin: "Error logging in as demo user",
+  },
   index: {
     tagline: "Your AI-driven guide to uncovering fascinating city destinations",
     cta: "Let's get started!",

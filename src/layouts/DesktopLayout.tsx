@@ -12,9 +12,10 @@ interface DesktopLayoutProps {
 const DesktopLayout: React.FC<DesktopLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const isLoginPage = pathname === "/sign-in" || pathname === "/sign-up";
 
-  // For home page, render children directly without the app layout
-  if (isHomePage) {
+  // For home/login page, render children directly without the app layout
+  if (isHomePage || isLoginPage) {
     return <>{children}</>;
   }
 

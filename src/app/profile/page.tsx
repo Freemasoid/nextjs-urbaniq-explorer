@@ -5,14 +5,16 @@ import { User, Settings, LogOut, Book } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/hooks/use-theme";
 import { toast } from "@/components/ui";
+import { useClerk } from "@clerk/nextjs";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const { signOut } = useClerk();
 
   const handleLogout = () => {
     toast.success("Logged out successfully");
-
+    signOut();
     router.push("/");
   };
 
