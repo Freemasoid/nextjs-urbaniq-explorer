@@ -53,11 +53,18 @@ export const deDE = {
     ],
   },
   tours: {
-    yourTours: "Deine Touren",
-    searchBy: "Suche nach Stadt oder Land",
-    noToursFound:
-      "Keine Touren gefunden. Versuche eine andere Suche oder erstelle eine neue Tour.",
-    createTour: "Neue Tour erstellen",
+    yourTours: "Ihre Touren",
+    discoverAndManage: "Entdecken und verwalten Sie Ihre Reiseitinerare",
+    searchTours: "Tour suchen",
+    searchToursDescription:
+      "Finden Sie Ihre gespeicherten Touren nach Stadt, Land oder Titel.",
+    searchToursPlaceholder: "Suchen Sie nach Stadt, Land oder Titel",
+    noToursFound: "Keine Touren gefunden.",
+    createNewTour: "Neue Tour erstellen",
+    tryDifferentSearchTerm:
+      "Versuchen Sie einen anderen Suchbegriff oder erstellen Sie eine neue Tour.",
+    youHavenToursYet:
+      "Sie haben noch keine Touren erstellt. Starten Sie mit der Erkundung!",
   },
   tourDetail: {
     backToTours: "Zurück zu den Touren",
@@ -72,6 +79,8 @@ export const deDE = {
     accountActions: "Kontoaktionen",
     logOut: "Abmelden",
     demoUser: "Demo-Benutzer",
+    requestsRemaining: "Anfragen verbleibend",
+    resetsIn: "Wiederherstellung in",
   },
   nav: {
     chat: "Chat",
