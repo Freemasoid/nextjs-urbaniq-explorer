@@ -55,10 +55,17 @@ export const ruRU = {
   },
   tours: {
     yourTours: "Ваши поездки",
-    searchBy: "Поиск по городу или стране",
-    noToursFound:
-      "Поездки не найдены. Попробуйте другой поиск или создать новую поездку.",
-    createTour: "Создать новую поездку",
+    discoverAndManage: "Открывайте и управляйте своими путешествиями",
+    searchTours: "Поиск поездок",
+    searchToursDescription:
+      "Найдите ваши сохраненные поездки по городу, стране или названию.",
+    searchToursPlaceholder: "Поиск по городу, стране или названию",
+    noToursFound: "Поездки не найдены.",
+    createNewTour: "Создать новую поездку",
+    tryDifferentSearchTerm:
+      "Попробуйте другой поисковый запрос или создайте новую поездку.",
+    youHavenToursYet:
+      "Вы еще не создали ни одной поездки. Начните исследовать!",
   },
   tourDetail: {
     backToTours: "Назад к поездкам",
@@ -73,6 +80,8 @@ export const ruRU = {
     accountActions: "Действия учетной записи",
     logOut: "Выйти",
     demoUser: "Demo-пользователь",
+    requestsRemaining: "запросов осталось",
+    resetsIn: "Восстановление через",
   },
   nav: {
     chat: "Чат",

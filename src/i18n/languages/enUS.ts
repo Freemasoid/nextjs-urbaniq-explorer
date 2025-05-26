@@ -53,10 +53,14 @@ export const enUS = {
   },
   tours: {
     yourTours: "Your Tours",
-    searchBy: "Search by city or country",
-    noToursFound:
-      "No tours found. Try a different search or create a new tour.",
-    createTour: "Create New Tour",
+    discoverAndManage: "Discover and manage your travel itineraries",
+    searchTours: "Search Tours",
+    searchToursDescription: "Find your saved tours by city, country, or title.",
+    searchToursPlaceholder: "Search by city, country, or title",
+    noToursFound: "No tours found.",
+    createNewTour: "Create New Tour",
+    tryDifferentSearchTerm: "Try a different search term or create a new tour.",
+    youHavenToursYet: "You haven't created any tours yet. Start exploring!",
   },
   tourDetail: {
     backToTours: "Back to Tours",
@@ -71,6 +75,8 @@ export const enUS = {
     accountActions: "Account Actions",
     logOut: "Log Out",
     demoUser: "Demo User",
+    requestsRemaining: "requests remaining",
+    resetsIn: "Resets in",
   },
   nav: {
     chat: "Chat",
