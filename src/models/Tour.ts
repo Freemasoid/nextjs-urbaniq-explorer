@@ -4,6 +4,7 @@ export interface ITour extends Document {
   city: string;
   country: string;
   title: string;
+  userId: string;
   description: string;
   image?: string;
   places: string[];
@@ -27,6 +28,10 @@ const tourSchema = new Schema<ITour>(
       type: String,
       required: true,
       trim: true,
+    },
+    userId: {
+      type: String,
+      required: true,
     },
     description: {
       type: String,
