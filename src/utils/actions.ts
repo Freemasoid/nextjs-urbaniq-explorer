@@ -22,6 +22,7 @@ interface TourInput {
   description: string;
   image?: string;
   places: string[];
+  userId: string;
 }
 
 interface TourQuery {
@@ -75,8 +76,8 @@ export async function getTour({
     const tour = await Tour.findOne({
       city: { $regex: new RegExp(`^${city}$`, "i") },
       country: { $regex: new RegExp(`^${country}$`, "i") },
-    });
-    return tour;
+    }).lean();
+    return tour as ITour | null;
   } catch (error) {
     console.error("Error fetching tour:", error);
     return null;
@@ -88,8 +89,8 @@ export async function getAllTours(searchParam?: string): Promise<ITour[]> {
     await connect();
 
     if (!searchParam) {
-      const tours = await Tour.find({}).sort({ city: 1 });
-      return tours;
+      const tours = await Tour.find({}).sort({ city: 1 }).lean();
+      return tours as unknown as ITour[];
     }
 
     const tours = await Tour.find({
@@ -107,11 +108,54 @@ export async function getAllTours(searchParam?: string): Promise<ITour[]> {
           },
         },
       ],
-    }).sort({ city: 1 });
+    })
+      .sort({ city: 1 })
+      .lean();
 
-    return tours;
+    return tours as unknown as ITour[];
   } catch (error) {
     console.error("Error fetching tours:", error);
+    return [];
+  }
+}
+
+export async function getUserTours(
+  userId: string,
+  searchParam?: string
+): Promise<ITour[]> {
+  try {
+    await connect();
+
+    const baseQuery = { userId };
+
+    if (!searchParam) {
+      const tours = await Tour.find(baseQuery).sort({ city: 1 }).lean();
+      return tours as unknown as ITour[];
+    }
+
+    const tours = await Tour.find({
+      ...baseQuery,
+      $or: [
+        {
+          city: {
+            $regex: searchParam,
+            $options: "i",
+          },
+        },
+        {
+          country: {
+            $regex: searchParam,
+            $options: "i",
+          },
+        },
+      ],
+    })
+      .sort({ city: 1 })
+      .lean();
+
+    return tours as unknown as ITour[];
+  } catch (error) {
+    console.error("Error fetching user tours:", error);
     return [];
   }
 }
@@ -184,7 +228,8 @@ export async function createTour(tour: TourInput): Promise<ITour | null> {
   try {
     await connect();
     const newTour = await Tour.create(tour);
-    return newTour;
+    // Convert Mongoose document to plain object
+    return newTour.toObject();
   } catch (error) {
     console.error("Error creating tour:", error);
     return null;
@@ -194,8 +239,8 @@ export async function createTour(tour: TourInput): Promise<ITour | null> {
 export async function getTourById(id: string): Promise<ITour | null> {
   try {
     await connect();
-    const tour = await Tour.findById(id);
-    return tour;
+    const tour = await Tour.findById(id).lean();
+    return tour as ITour | null;
   } catch (error) {
     console.error("Error fetching tour by ID:", error);
     return null;
