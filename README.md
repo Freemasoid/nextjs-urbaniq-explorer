@@ -7,12 +7,14 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 ## Features
 
 - **AI-Powered Chat Interface**: Chat with an AI travel assistant to get personalized recommendations
-- **Tour Creation**: Generate custom tours based on your preferences
-- **Tour History**: Browse and revisit your saved tours
+- **Multilingual Tour Creation**: Generate custom tours based on your preferences in English, German, or Russian
+- **Tour History**: Browse and revisit your saved tours with search functionality
 - **Responsive Design**: Fully functional on both desktop and mobile devices
-- **User Authentication**: Secure user authentication and profile management with Clerk
+- **User Authentication**: Secure user authentication and profile management with Clerk (including demo user access)
 - **Internationalization**: Support for multiple languages (English, German, Russian)
 - **Persistent Storage**: Tour data stored in MongoDB
+- **Theme Support**: Light and dark mode with system preference detection
+- **External Image Integration**: Unsplash API integration for city images
 
 ## Tech Stack
 
@@ -25,14 +27,17 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 - **State Management**:
   - React hooks for local state
   - Redux Toolkit for global state management
-  - TanStack React Query for server state
+  - TanStack React Query for server state and mutations
 - **Database**: MongoDB with Mongoose
 - **Authentication**: Clerk authentication service
-- **Internationalization**: Custom i18n implementation
+- **Internationalization**: Custom i18n implementation with language context
 - **Forms & Validation**: Zod
 - **UI Enhancements**:
   - Sonner for toast notifications
   - Custom theme provider with light/dark mode support
+- **API Integration**:
+  - OpenAI API for AI-powered chat and tour generation
+  - Unsplash API for city images
 
 ## Getting Started
 
@@ -41,6 +46,9 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 - Node.js 18.17 or later
 - pnpm (recommended) or npm/yarn/bun
 - MongoDB (local or Atlas)
+- OpenAI API key
+- Unsplash API key
+- Clerk account for authentication
 
 ### Installation
 
@@ -69,11 +77,13 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
    OPENAI_API_KEY="your_openai_key"
+   UNSPLASH_KEY="your_unsplash_api_key"
 
    MONGODB_URI="your_mongo_uri"
 
-   NEXT_PUBLIC_DEMO_USER_EMAIL
-   NEXT_PUBLIC_DEMO_USER_PASSWORD
+   # Optional: For demo user access
+   NEXT_PUBLIC_DEMO_USER_EMAIL="demo_email"
+   NEXT_PUBLIC_DEMO_USER_PASSWORD="demo_password"
    ```
 
 4. Start the development server:
@@ -82,4 +92,20 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 pnpm dev
 ```
 
-2. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Usage
+
+- **Home Page**: Learn about the application features
+- **Chat**: Interact with the AI travel assistant for general travel recommendations
+- **New Tour**: Generate a custom tour by entering a city and country
+- **Tours**: View all your saved tours with search functionality
+- **Profile**: Manage your account settings and theme preferences
+
+## Deployment
+
+The application is deployed on Vercel. For your own deployment:
+
+1. Push your repository to GitHub
+2. Connect to Vercel and deploy
+3. Add the environment variables in the Vercel dashboard
