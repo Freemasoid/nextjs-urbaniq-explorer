@@ -133,21 +133,19 @@ const NewTour: React.FC = () => {
           </p>
 
           {/* Rate Limit Info */}
-          {user?.emailAddresses[0].emailAddress ===
-            process.env.NEXT_PUBLIC_DEMO_USER_EMAIL &&
-            rateLimitInfo && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span>
-                  {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
-                  {rateLimitInfo.resetTimeHours > 0 && (
-                    <span className="text-xs block">
-                      {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
-                    </span>
-                  )}
-                </span>
-              </div>
-            )}
+          {rateLimitInfo && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              <span>
+                {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
+                {rateLimitInfo.resetTimeHours > 0 && (
+                  <span className="text-xs block">
+                    {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
