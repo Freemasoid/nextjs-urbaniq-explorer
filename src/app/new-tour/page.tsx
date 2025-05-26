@@ -13,13 +13,14 @@ import { getTour, genTourRes, createTour } from "@/utils/actions";
 interface TourDestination {
   city: string;
   country: string;
+  language?: string;
 }
 
 const NewTour: React.FC = () => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const router = useRouter();
   const { user } = useUser();
   const { data: rateLimitInfo } = useRateLimit();
@@ -74,6 +75,7 @@ const NewTour: React.FC = () => {
     const destination: TourDestination = {
       city: city.trim(),
       country: country.trim(),
+      language: language,
     };
 
     if (!destination.city || !destination.country) {
