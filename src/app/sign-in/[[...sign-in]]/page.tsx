@@ -47,7 +47,7 @@ function SignInPage() {
             className="w-full mb-4 shadow-md shadow-accent/20 active:shadow-none transition-shadow duration-150"
             onClick={handleDemoLogin}
           >
-            Sign in as Demo User
+            {t("auth.signInAsDemoUser")}
           </Button>
 
           <SignIn
