@@ -5,6 +5,7 @@ export const enUS = {
     demoLogin: "Demo Login",
     demoLoginDescription: "Logged in as demo user",
     errorDemoLogin: "Error logging in as demo user",
+    signInAsDemoUser: "Sign in as Demo User",
   },
   index: {
     tagline: "Your AI-driven guide to uncovering fascinating city destinations",
@@ -44,6 +45,12 @@ export const enUS = {
     country: "Country",
     countryPlaceholder: "e.g. Germany",
     travelSuggestions: "Travel Suggestions",
+    suggestions: [
+      "Paris, France - City of Lights",
+      "Rome, Italy - Eternal City",
+      "Kyoto, Japan - Cultural Capital",
+      "Barcelona, Spain - Gaudi's Masterpieces",
+    ],
   },
   tours: {
     yourTours: "Your Tours",
@@ -58,6 +65,14 @@ export const enUS = {
     saveToFavorites: "Save to Favorites",
     shareTour: "Share Tour",
   },
+  profile: {
+    profile: "Profile",
+    loggedOutSuccessfully: "Logged out successfully",
+    switchTheme: "Switch Theme",
+    accountActions: "Account Actions",
+    logOut: "Log Out",
+    demoUser: "Demo User",
+  },
   nav: {
     chat: "Chat",
     newTour: "New Tour",
@@ -66,5 +81,7 @@ export const enUS = {
   },
   errors: {
     cityCountryEmpty: "Please enter both city and country",
+    pageNotFound: "Oops! Page not found",
+    returnToHome: "Return to Home",
   },
 };
