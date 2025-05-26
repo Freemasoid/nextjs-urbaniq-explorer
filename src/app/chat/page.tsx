@@ -1,9 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Send, MessageSquare } from "lucide-react";
+import { Send, MessageSquare, Clock } from "lucide-react";
 import { useTranslation } from "@/i18n/useTranslation";
 import { cn } from "@/lib/utils";
+import { chatResponse } from "@/utils/actions";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRateLimit } from "@/hooks/use-rate-limit";
+
+type ChatRole = "system" | "user" | "assistant";
+
+interface ChatMessage {
+  role: ChatRole;
+  content: string;
+}
 
 interface Message {
   id: string;
@@ -15,6 +26,7 @@ interface Message {
 const Chat: React.FC = () => {
   const [input, setInput] = useState("");
   const { t } = useTranslation();
+  const { data: rateLimitInfo } = useRateLimit();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -23,6 +35,38 @@ const Chat: React.FC = () => {
       timestamp: new Date(),
     },
   ]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (userMessage: Message) => {
+      const chatMessages = messages.map((msg) => ({
+        role:
+          msg.sender === "user"
+            ? ("user" as ChatRole)
+            : ("assistant" as ChatRole),
+        content: msg.content,
+      }));
+
+      return chatResponse([
+        ...chatMessages,
+        { role: "user" as ChatRole, content: userMessage.content },
+      ]);
+    },
+    onSuccess: (data) => {
+      if (!data) {
+        toast.error(t("errors.error"));
+        return;
+      }
+
+      const aiMessage: Message = {
+        id: Date.now().toString(),
+        sender: "ai",
+        content: data.content || "",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, aiMessage]);
+    },
+  });
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,20 +79,10 @@ const Chat: React.FC = () => {
       timestamp: new Date(),
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: "ai",
-        content:
-          "I'm your travel assistant. Tell me where you'd like to travel, and I'll help you plan your trip!",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    }, 1000);
+    mutate(userMessage);
   };
 
   return (
@@ -58,11 +92,26 @@ const Chat: React.FC = () => {
         <div className="p-2 rounded-full bg-primary/10">
           <MessageSquare className="text-primary h-6 w-6" />
         </div>
-        <div>
+        <div className="flex-1">
           <h2 className="text-xl font-semibold">{t("chat.travelAssistant")}</h2>
           <p className="text-sm text-muted-foreground">
             {t("chat.travelAssistantDescription")}
           </p>
+
+          {/* Rate Limit Info */}
+          {rateLimitInfo && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              <span>
+                {rateLimitInfo.remaining} requests remaining
+                {rateLimitInfo.resetTimeHours > 0 && (
+                  <span className="text-xs block">
+                    Resets in {rateLimitInfo.resetTimeHours}h
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

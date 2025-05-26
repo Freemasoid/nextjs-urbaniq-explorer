@@ -3,6 +3,8 @@
 import connect from "./mongodb";
 import Tour, { ITour } from "../models/Tour";
 import OpenAI from "openai";
+import { rateLimiter } from "@/lib/rate-limiter";
+import { getClientIP } from "@/lib/get-client-ip";
 
 const openAI = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -29,6 +31,21 @@ interface TourQuery {
 
 export async function chatResponse(messages: ChatMessage[]) {
   try {
+    // Get client IP and check rate limit
+    const clientIP = await getClientIP();
+
+    if (!rateLimiter.isAllowed(clientIP)) {
+      const resetTime = rateLimiter.getResetTime(clientIP);
+      const hoursUntilReset = Math.ceil(resetTime / (1000 * 60 * 60));
+
+      return {
+        role: "assistant" as const,
+        content: `Demo limit reached. You have made too many requests. Please try again in ${hoursUntilReset} hours. Remaining requests: ${rateLimiter.getRemainingRequests(
+          clientIP
+        )}`,
+      };
+    }
+
     const resp = await openAI.chat.completions.create({
       messages: [
         {
@@ -41,6 +58,7 @@ export async function chatResponse(messages: ChatMessage[]) {
       model: "gpt-3.5-turbo",
       temperature: 0,
     });
+
     return resp.choices[0].message;
   } catch (error) {
     console.log(error);
@@ -99,6 +117,17 @@ export async function getAllTours(searchParam?: string): Promise<ITour[]> {
 }
 
 export async function genTourRes({ city, country }: TourQuery) {
+  // Check rate limit for tour generation as well
+  const clientIP = await getClientIP();
+
+  if (!rateLimiter.isAllowed(clientIP)) {
+    const resetTime = rateLimiter.getResetTime(clientIP);
+    const hoursUntilReset = Math.ceil(resetTime / (1000 * 60 * 60));
+    throw new Error(
+      `Demo limit reached. Please try again in ${hoursUntilReset} hours.`
+    );
+  }
+
   const query = `Find a city ${city} in following country ${country}. If this said city exists in said country, create a list of things users can do in city ${city} country ${country}.
   As soon as you have the list, create a one day tour. Response should be in following JSON format:
   {

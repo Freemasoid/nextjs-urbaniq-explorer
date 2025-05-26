@@ -83,5 +83,6 @@ export const enUS = {
     cityCountryEmpty: "Please enter both city and country",
     pageNotFound: "Oops! Page not found",
     returnToHome: "Return to Home",
+    error: "Something went wrong",
   },
 };
