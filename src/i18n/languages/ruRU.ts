@@ -71,6 +71,7 @@ export const ruRU = {
     noTourFound: "Поездка не найдена",
     saveToFavorites: "Сохранить в избранное",
     shareTour: "Поделиться поездкой",
+    loadingImage: "Загрузка изображения...",
   },
   profile: {
     profile: "Профиль",

@@ -311,3 +311,43 @@ export async function getTourById(id: string): Promise<ITour | null> {
     return null;
   }
 }
+
+export async function getUnsplashImageByCityName(
+  cityName: string
+): Promise<string | null> {
+  try {
+    const unsplashKey = process.env.UNSPLASH_KEY;
+
+    if (!unsplashKey) {
+      console.error("UNSPLASH_KEY not found in environment variables");
+      return null;
+    }
+
+    const response = await fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+        cityName
+      )}&per_page=1&orientation=landscape`,
+      {
+        headers: {
+          Authorization: `Client-ID ${unsplashKey}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to fetch from Unsplash:", response.statusText);
+      return null;
+    }
+
+    const data = await response.json();
+
+    if (data.results && data.results.length > 0) {
+      return data.results[0].urls.regular;
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error fetching Unsplash image:", error);
+    return null;
+  }
+}

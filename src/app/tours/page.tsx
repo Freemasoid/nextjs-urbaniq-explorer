@@ -2,54 +2,24 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Search, MapPin, Plus } from "lucide-react";
 import { useTranslation } from "@/i18n/useTranslation";
-
-interface Tour {
-  id: string;
-  title: string;
-  description: string;
-  city: string;
-  country: string;
-  tags: string[];
-}
-
-const SAMPLE_TOURS: Tour[] = [
-  {
-    id: "1",
-    title: "Exploring the Vibrant City of Zürich",
-    description:
-      "Zürich, the largest city in Switzerland, is known for its picturesque old town, stunning lake views, and vibrant cultural scene.",
-    city: "Zürich",
-    country: "Switzerland",
-    tags: ["Zürich", "Schweiz"],
-  },
-  {
-    id: "2",
-    title: "The Magic of Paris in 24 Hours",
-    description:
-      "Experience the romantic City of Light with this perfectly crafted one-day itinerary covering the must-see sights.",
-    city: "Paris",
-    country: "France",
-    tags: ["Paris", "France"],
-  },
-  {
-    id: "3",
-    title: "Barcelona: Gaudí, Beaches and Tapas",
-    description:
-      "Discover the architectural wonders, Mediterranean beaches and culinary delights of Catalunya's vibrant capital.",
-    city: "Barcelona",
-    country: "Spain",
-    tags: ["Barcelona", "Spain"],
-  },
-];
+import { ITour } from "@/models/Tour";
+import { getUserTours } from "@/utils/actions";
+import { useUser } from "@clerk/nextjs";
+import { useQuery } from "@tanstack/react-query";
 
 const ToursPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [tours] = useState<Tour[]>(SAMPLE_TOURS);
+  const { user } = useUser();
   const { t } = useTranslation();
 
-  const filteredTours = tours.filter(
+  const { data: tours } = useQuery({
+    queryKey: ["tours", user?.id],
+    queryFn: () => getUserTours(user?.id || ""),
+  });
+
+  const filteredTours = tours?.filter(
     (tour) =>
       tour.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tour.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -57,64 +27,103 @@ const ToursPage: React.FC = () => {
   );
 
   return (
-    <div>
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">
-        {t("tours.yourTours")}
-      </h1>
-
-      <div className="relative mb-6 max-w-md">
-        <Search
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-          size={18}
-        />
-        <input
-          type="text"
-          placeholder={t("tours.searchBy")}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full rounded-full border pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
-        />
+    <div className="max-w-2xl mx-auto">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 rounded-full bg-primary/10">
+          <MapPin className="text-primary h-6 w-6" />
+        </div>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold">
+            {t("tours.yourTours")}
+          </h1>
+          <p className="text-muted-foreground">
+            {t("tours.discoverAndManage")}
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredTours.length === 0 ? (
-          <div className="text-center py-8 col-span-full">
-            <p className="text-muted-foreground">{t("tours.noToursFound")}</p>
+      <div className="space-y-6">
+        <div className="tour-card p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Search className="text-primary h-5 w-5" />
+            <h2 className="text-xl font-semibold">{t("tours.searchTours")}</h2>
+          </div>
+          <p className="text-muted-foreground mb-4">
+            {t("tours.searchToursDescription")}
+          </p>
+
+          <div className="relative">
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+              size={18}
+            />
+            <input
+              type="text"
+              placeholder={t("tours.searchToursPlaceholder")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-lg border pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+            />
+          </div>
+        </div>
+
+        {filteredTours?.length === 0 ? (
+          <div className="tour-card p-6 text-center">
+            <div className="p-3 rounded-full bg-muted/50 w-fit mx-auto mb-4">
+              <MapPin className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="font-semibold text-lg mb-2">
+              {t("tours.noToursFound")}
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              {searchQuery
+                ? t("tours.tryDifferentSearchTerm")
+                : t("tours.youHavenToursYet")}
+            </p>
             <Link
               href="/new-tour"
-              className="btn-primary inline-block mt-4"
+              className="btn-primary inline-flex items-center gap-2"
             >
-              {t("tours.createTour")}
+              <Plus className="h-4 w-4" />
+              {t("tours.createNewTour")}
             </Link>
           </div>
         ) : (
-          filteredTours.map((tour) => (
-            <Link
-              href={`/tours/${tour.id}`}
-              key={tour.id}
-              className="block"
-            >
-              <div className="tour-card hover:border-primary p-4 h-full">
-                <h2 className="font-semibold text-lg">{tour.title}</h2>
-                <p className="text-muted-foreground text-sm mt-1 line-clamp-3">
-                  {tour.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {tour.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2 py-1 bg-muted rounded-full"
-                    >
-                      {tag}
+          <div className="space-y-4">
+            {filteredTours?.map((tour, index) => (
+              <Link
+                href={`/tours/${tour._id}`}
+                key={index}
+                className="block"
+              >
+                <div className="tour-card hover:border-primary p-6 transition-all hover:shadow-md">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="font-semibold text-lg leading-tight pr-4">
+                      {tour.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {tour.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs px-3 py-1 bg-muted rounded-full">
+                      {tour.city}
                     </span>
-                  ))}
+
+                    <span className="text-xs px-3 py-1 bg-muted rounded-full">
+                      {tour.country}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </div>
   );
 };
+
 export default ToursPage;
