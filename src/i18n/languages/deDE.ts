@@ -32,6 +32,11 @@ export const deDE = {
       "Fragen Sie mich nach Ihren Reiseplänen! Ich helfe Ihnen, Ihre Reise zu planen!",
   },
   newTour: {
+    createNewTour: "Neue Tour erstellen",
+    createNewTourDescription: "Erstellen Sie eine persönliche Reiseitinerar",
+    destination: "Ziel",
+    destinationDescription:
+      "Erzählen Sie uns, wo Sie erkunden möchten, und wir erstellen eine angepasste Tour nur für Sie.",
     generateTour: "Tour erstellen",
     generating: "Erstellung ...",
     success: "Tour erfolgreich erstellt",
@@ -41,16 +46,10 @@ export const deDE = {
     whereToDescription:
       "Geben Sie eine Stadt und ein Land ein, um eine persönliche Tour-Itinerar erstellen.",
     city: "Stadt",
-    cityPlaceholder: "z.B. Berlin",
+    cityPlaceholder: "e.g. Berlin",
     country: "Land",
-    countryPlaceholder: "z.B. Deutschland",
-    travelSuggestions: "Reiseempfehlungen",
-    suggestions: [
-      "Paris, Frankreich - Stadt der Lichter",
-      "Rom, Italien - Ewige Stadt",
-      "Kyoto, Japan - Kulturelle Hauptstadt",
-      "Barcelona, Spanien - Gaudi's Meisterwerke",
-    ],
+    countryPlaceholder: "e.g. Deutschland",
+    popularDestinations: "Beliebte Ziele",
   },
   tours: {
     yourTours: "Ihre Touren",
