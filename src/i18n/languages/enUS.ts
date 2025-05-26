@@ -32,6 +32,11 @@ export const enUS = {
       "Ask me about your travel plans! I'll help you plan your trip!",
   },
   newTour: {
+    createNewTour: "Create New Tour",
+    createNewTourDescription: "Generate a personalized travel itinerary",
+    destination: "Destination",
+    destinationDescription:
+      "Tell us where you'd like to explore, and we'll create a customized tour just for you.",
     generateTour: "Generate Tour",
     generating: "Generating ...",
     success: "Tour generated successfully",
@@ -44,13 +49,7 @@ export const enUS = {
     cityPlaceholder: "e.g. Berlin",
     country: "Country",
     countryPlaceholder: "e.g. Germany",
-    travelSuggestions: "Travel Suggestions",
-    suggestions: [
-      "Paris, France - City of Lights",
-      "Rome, Italy - Eternal City",
-      "Kyoto, Japan - Cultural Capital",
-      "Barcelona, Spain - Gaudi's Masterpieces",
-    ],
+    popularDestinations: "Popular Destinations",
   },
   tours: {
     yourTours: "Your Tours",
