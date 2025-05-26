@@ -70,6 +70,7 @@ export const deDE = {
     noTourFound: "Tour nicht gefunden",
     saveToFavorites: "In Favoriten speichern",
     shareTour: "Tour teilen",
+    loadingImage: "Bild wird geladen...",
   },
   profile: {
     profile: "Profil",

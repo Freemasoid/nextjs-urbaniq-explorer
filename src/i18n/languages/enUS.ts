@@ -67,6 +67,7 @@ export const enUS = {
     noTourFound: "Tour not found",
     saveToFavorites: "Save to Favorites",
     shareTour: "Share Tour",
+    loadingImage: "Loading image...",
   },
   profile: {
     profile: "Profile",
