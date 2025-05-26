@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "@/i18n/useTranslation";
 
 const Header = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const { language, setLanguage, t } = useTranslation();
 
   const languages = [
@@ -20,6 +20,14 @@ const Header = () => {
     { code: "deDE" as const, label: "Deutsch" },
     { code: "ruRU" as const, label: "Русский" },
   ];
+
+  const handleThemeToggle = () => {
+    if (theme === "system") {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    } else {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
@@ -54,11 +62,15 @@ const Header = () => {
             </DropdownMenu>
 
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={handleThemeToggle}
               className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              {resolvedTheme === "dark" ? (
+                <Sun size={20} />
+              ) : (
+                <Moon size={20} />
+              )}
             </button>
           </div>
         </div>
