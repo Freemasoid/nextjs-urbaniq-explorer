@@ -10,6 +10,9 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 - **Tour Creation**: Generate custom tours based on your preferences
 - **Tour History**: Browse and revisit your saved tours
 - **Responsive Design**: Fully functional on both desktop and mobile devices
+- **User Authentication**: Secure user authentication and profile management with Clerk
+- **Internationalization**: Support for multiple languages (English, German, Russian)
+- **Persistent Storage**: Tour data stored in MongoDB
 
 ## Tech Stack
 
@@ -21,7 +24,11 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
   - Lucide icons
 - **State Management**:
   - React hooks for local state
+  - Redux Toolkit for global state management
   - TanStack React Query for server state
+- **Database**: MongoDB with Mongoose
+- **Authentication**: Clerk authentication service
+- **Internationalization**: Custom i18n implementation
 - **Forms & Validation**: Zod
 - **UI Enhancements**:
   - Sonner for toast notifications
@@ -33,6 +40,7 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 
 - Node.js 18.17 or later
 - pnpm (recommended) or npm/yarn/bun
+- MongoDB (local or Atlas)
 
 ### Installation
 
@@ -52,21 +60,26 @@ Hosting: [Live Demo](https://nextjs-urbaniq-explorer.vercel.app/chat)
 3. Create a `.env.local` file in the root directory with the following variables:
 
    ```
-   # Required environment variables
-   OPENAI_API_KEY=your_openai_api_key
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
+   CLERK_SECRET_KEY="your_clerk_secret_key"
 
-   # Authentication (if implemented)
-   # CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-   # CLERK_SECRET_KEY=your_clerk_secret_key
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
-   # Database (when connected)
-   # DATABASE_URL=your_database_connection_string
+   OPENAI_API_KEY="your_openai_key"
+
+   MONGODB_URI="your_mongo_uri"
+
+   NEXT_PUBLIC_DEMO_USER_EMAIL
+   NEXT_PUBLIC_DEMO_USER_PASSWORD
    ```
 
 4. Start the development server:
 
-   ```bash
-   pnpm dev
-   ```
+```bash
+pnpm dev
+```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+2. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
