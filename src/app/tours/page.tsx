@@ -58,7 +58,9 @@ const ToursPage: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">Your Tours</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-6">
+        {t("tours.yourTours")}
+      </h1>
 
       <div className="relative mb-6 max-w-md">
         <Search
@@ -67,7 +69,7 @@ const ToursPage: React.FC = () => {
         />
         <input
           type="text"
-          placeholder="Search by city or country"
+          placeholder={t("tours.searchBy")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full rounded-full border pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -77,14 +79,12 @@ const ToursPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTours.length === 0 ? (
           <div className="text-center py-8 col-span-full">
-            <p className="text-muted-foreground">
-              No tours found. Try a different search or create a new tour.
-            </p>
+            <p className="text-muted-foreground">{t("tours.noToursFound")}</p>
             <Link
               href="/new-tour"
               className="btn-primary inline-block mt-4"
             >
-              Create New Tour
+              {t("tours.createTour")}
             </Link>
           </div>
         ) : (
