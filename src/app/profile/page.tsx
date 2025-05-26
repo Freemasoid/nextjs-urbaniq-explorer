@@ -1,16 +1,14 @@
 "use client";
 
 import React from "react";
-import { User, Settings, LogOut, Book } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/hooks/use-theme";
 import { toast } from "@/components/ui";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useTranslation } from "@/i18n/useTranslation";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
   const { signOut } = useClerk();
   const { user } = useUser();
   const { t } = useTranslation();
@@ -23,9 +21,16 @@ const ProfilePage: React.FC = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6">
-        {t("profile.profile")}
-      </h1>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 rounded-full bg-primary/10">
+          <User className="text-primary h-6 w-6" />
+        </div>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold">
+            {t("profile.profile")}
+          </h1>
+        </div>
+      </div>
 
       <div className="md:flex md:items-center gap-6 mb-8 p-6 bg-card rounded-lg border">
         <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto md:mx-0 mb-4 md:mb-0">
