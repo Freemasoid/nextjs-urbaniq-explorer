@@ -25,11 +25,28 @@ export const deDE = {
     help: "Hilfe",
   },
   chat: {
+    changeLanguage: "Sprache ändern",
     askGuide: "Frage deinen Guide ...",
     assist: "Hallo! Wie kann ich Ihnen heute behilflich sein?",
     travelAssistant: "Reiseassistent",
     travelAssistantDescription:
       "Fragen Sie mich nach Ihren Reiseplänen! Ich helfe Ihnen, Ihre Reise zu planen!",
+    welcome: {
+      title: "Willkommen bei UrbanIQ Explorer! 🌍",
+      subtitle: "Ihr KI-gestützter Reisebegleiter",
+      feature1: {
+        title: "Mehrsprachiger Chat",
+        description:
+          "Ich kann Ihnen in Ihrer bevorzugten Sprache antworten. Stellen Sie mir einfach Fragen in jeder Sprache!",
+      },
+      feature2: {
+        title: "Lokalisierte Touren",
+        description:
+          "Wechseln Sie die Anwendungssprache, um Touren und Inhalte zu erhalten, die auf Ihre Region zugeschnitten sind.",
+      },
+      getStarted: "Loslegen",
+      skipTour: "Tour überspringen",
+    },
   },
   newTour: {
     createNewTour: "Neue Tour erstellen",

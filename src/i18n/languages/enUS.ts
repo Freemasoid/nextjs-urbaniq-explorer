@@ -25,11 +25,28 @@ export const enUS = {
     help: "Help",
   },
   chat: {
+    changeLanguage: "Change Language",
     askGuide: "Ask your guide ...",
     assist: "Hello! How can I assist you today?",
     travelAssistant: "Travel Assistant",
     travelAssistantDescription:
       "Ask me about your travel plans! I'll help you plan your trip!",
+    welcome: {
+      title: "Welcome to UrbanIQ Explorer! 🌍",
+      subtitle: "Your AI-powered travel companion",
+      feature1: {
+        title: "Multilingual Chat",
+        description:
+          "I can respond to you in your preferred language. Just ask me questions in any language!",
+      },
+      feature2: {
+        title: "Localized Tours",
+        description:
+          "Switch the application language to get tours and content tailored to your region.",
+      },
+      getStarted: "Get Started",
+      skipTour: "Skip Tour",
+    },
   },
   newTour: {
     createNewTour: "Create New Tour",
