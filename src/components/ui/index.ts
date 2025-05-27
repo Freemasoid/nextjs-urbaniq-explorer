@@ -37,6 +37,19 @@ import {
   DropdownMenuSubContent,
 } from "./DropdownMenu";
 
+import {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "./Dialog";
+
 export {
   Header,
   Button,
@@ -61,6 +74,16 @@ export {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
   Input,
   Label,
   Separator,

@@ -8,6 +8,9 @@ import { chatResponse } from "@/utils/actions";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRateLimit } from "@/hooks/use-rate-limit";
+import { useWelcomePopup } from "@/hooks/use-welcome-popup";
+import WelcomePopup from "@/components/WelcomePopup";
+
 type ChatRole = "system" | "user" | "assistant";
 
 interface ChatMessage {
@@ -26,6 +29,11 @@ const Chat: React.FC = () => {
   const [input, setInput] = useState("");
   const { t } = useTranslation();
   const { data: rateLimitInfo } = useRateLimit();
+  const {
+    isOpen: isWelcomeOpen,
+    isLoading: isWelcomeLoading,
+    closeWelcomePopup,
+  } = useWelcomePopup();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -85,108 +93,117 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-10rem)] md:h-[calc(100vh-5rem)] w-full mx-auto">
-      {/* Chat Header */}
-      <div className="flex items-center gap-3 pb-4 border-b">
-        <div className="p-2 rounded-full bg-primary/10">
-          <MessageSquare className="text-primary h-6 w-6" />
+    <>
+      <WelcomePopup
+        isOpen={isWelcomeOpen && !isWelcomeLoading}
+        onClose={closeWelcomePopup}
+      />
+
+      <div className="flex flex-col h-[calc(100vh-10rem)] md:h-[calc(100vh-5rem)] w-full mx-auto">
+        {/* Chat Header */}
+        <div className="flex items-center gap-3 pb-4 border-b">
+          <div className="p-2 rounded-full bg-primary/10">
+            <MessageSquare className="text-primary h-6 w-6" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-xl font-semibold">
+              {t("chat.travelAssistant")}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {t("chat.travelAssistantDescription")}
+            </p>
+
+            {/* Rate Limit Info */}
+            {rateLimitInfo && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                <span>
+                  {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
+                  {rateLimitInfo.resetTimeHours > 0 && (
+                    <span className="text-xs block">
+                      {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
+                    </span>
+                  )}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex-1">
-          <h2 className="text-xl font-semibold">{t("chat.travelAssistant")}</h2>
-          <p className="text-sm text-muted-foreground">
-            {t("chat.travelAssistantDescription")}
-          </p>
 
-          {/* Rate Limit Info */}
-          {rateLimitInfo && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>
-                {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
-                {rateLimitInfo.resetTimeHours > 0 && (
-                  <span className="text-xs block">
-                    {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
-                  </span>
-                )}
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
+        {/* Messages Container */}
+        <div className="flex-1 overflow-y-auto py-6 px-1 md:px-4 space-y-6">
+          {messages.map((message, index) => {
+            const isFirstMessageOfGroup =
+              index === 0 || messages[index - 1].sender !== message.sender;
+            const isLastMessageOfGroup =
+              index === messages.length - 1 ||
+              messages[index + 1].sender !== message.sender;
 
-      {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto py-6 px-1 md:px-4 space-y-6">
-        {messages.map((message, index) => {
-          const isFirstMessageOfGroup =
-            index === 0 || messages[index - 1].sender !== message.sender;
-          const isLastMessageOfGroup =
-            index === messages.length - 1 ||
-            messages[index + 1].sender !== message.sender;
-
-          return (
-            <div
-              key={message.id}
-              className={cn(
-                "chat-message-container",
-                message.sender === "user" ? "justify-end" : "justify-start",
-                !isFirstMessageOfGroup && !isLastMessageOfGroup
-                  ? "my-1"
-                  : "my-3"
-              )}
-            >
+            return (
               <div
+                key={message.id}
                 className={cn(
-                  "chat-bubble flex flex-col",
-                  message.sender === "user"
-                    ? "chat-bubble-user rounded-2xl rounded-tr-sm"
-                    : "chat-bubble-ai rounded-2xl rounded-tl-sm",
-                  "md:max-w-[70%] lg:max-w-[40%] max-w-[85%]",
-                  "shadow-sm"
+                  "chat-message-container",
+                  message.sender === "user" ? "justify-end" : "justify-start",
+                  !isFirstMessageOfGroup && !isLastMessageOfGroup
+                    ? "my-1"
+                    : "my-3"
                 )}
               >
-                <p className="text-base">{message.content}</p>
                 <div
                   className={cn(
-                    "text-xs mt-1.5",
+                    "chat-bubble flex flex-col",
                     message.sender === "user"
-                      ? "text-right text-yellow-800"
-                      : "text-muted-foreground"
+                      ? "chat-bubble-user rounded-2xl rounded-tr-sm"
+                      : "chat-bubble-ai rounded-2xl rounded-tl-sm",
+                    "md:max-w-[70%] lg:max-w-[40%] max-w-[85%]",
+                    "shadow-sm"
                   )}
                 >
-                  {message.timestamp.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  <p className="text-base">{message.content}</p>
+                  <div
+                    className={cn(
+                      "text-xs mt-1.5",
+                      message.sender === "user"
+                        ? "text-right text-yellow-800"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Input Area */}
-      <form
-        onSubmit={handleSendMessage}
-        className="border-t pt-4 sticky bottom-0 bg-background"
-      >
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={t("chat.askGuide")}
-            className="flex-1 rounded-full border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-          <button
-            type="submit"
-            className="bg-primary text-primary-foreground rounded-full p-4 hover:opacity-90 transition-colors"
-            disabled={!input.trim()}
-          >
-            <Send size={20} />
-          </button>
+            );
+          })}
         </div>
-      </form>
-    </div>
+
+        {/* Input Area */}
+        <form
+          onSubmit={handleSendMessage}
+          className="border-t pt-4 sticky bottom-0 bg-background"
+        >
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={t("chat.askGuide")}
+              className="flex-1 rounded-full border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <button
+              type="submit"
+              className="bg-primary text-primary-foreground rounded-full p-4 hover:opacity-90 transition-colors"
+              disabled={!input.trim()}
+            >
+              <Send size={20} />
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
