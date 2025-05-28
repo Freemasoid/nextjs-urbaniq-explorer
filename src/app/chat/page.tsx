@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { chatResponse } from "@/utils/actions";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRateLimit } from "@/hooks/use-rate-limit";
 import { useWelcomePopup } from "@/hooks/use-welcome-popup";
 import WelcomePopup from "@/components/WelcomePopup";
 
@@ -28,7 +27,6 @@ interface Message {
 const Chat: React.FC = () => {
   const [input, setInput] = useState("");
   const { t } = useTranslation();
-  const { data: rateLimitInfo } = useRateLimit();
   const {
     isOpen: isWelcomeOpen,
     isLoading: isWelcomeLoading,
@@ -99,12 +97,13 @@ const Chat: React.FC = () => {
         onClose={closeWelcomePopup}
       />
 
-      <div className="flex flex-col h-[calc(100vh-10rem)] md:h-[calc(100vh-5rem)] w-full mx-auto">
+      <div className="flex flex-col w-full mx-auto justify-between h-full">
         {/* Chat Header */}
         <div className="flex items-center gap-3 pb-4 border-b">
           <div className="p-2 rounded-full bg-primary/10">
             <MessageSquare className="text-primary h-6 w-6" />
           </div>
+
           <div className="flex-1">
             <h2 className="text-xl font-semibold">
               {t("chat.travelAssistant")}
@@ -112,21 +111,6 @@ const Chat: React.FC = () => {
             <p className="text-sm text-muted-foreground">
               {t("chat.travelAssistantDescription")}
             </p>
-
-            {/* Rate Limit Info */}
-            {rateLimitInfo && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span>
-                  {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
-                  {rateLimitInfo.resetTimeHours > 0 && (
-                    <span className="text-xs block">
-                      {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
-                    </span>
-                  )}
-                </span>
-              </div>
-            )}
           </div>
         </div>
 
@@ -183,7 +167,7 @@ const Chat: React.FC = () => {
         {/* Input Area */}
         <form
           onSubmit={handleSendMessage}
-          className="border-t pt-4 sticky bottom-0 bg-background"
+          className="flex-end border-t pt-4 sticky bottom-0 bg-background"
         >
           <div className="flex gap-2">
             <input

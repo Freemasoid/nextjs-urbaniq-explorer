@@ -5,8 +5,7 @@ import { toast } from "sonner";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
-import { Sparkles, MapPin, Clock, Loader2 } from "lucide-react";
-import { useRateLimit } from "@/hooks/use-rate-limit";
+import { Sparkles, MapPin, Loader2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getTour, genTourRes, createTour } from "@/utils/actions";
 
@@ -23,7 +22,6 @@ const NewTour: React.FC = () => {
   const { t, language } = useTranslation();
   const router = useRouter();
   const { user } = useUser();
-  const { data: rateLimitInfo } = useRateLimit();
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -131,21 +129,6 @@ const NewTour: React.FC = () => {
           <p className="text-muted-foreground">
             {t("newTour.createNewTourDescription")}
           </p>
-
-          {/* Rate Limit Info */}
-          {rateLimitInfo && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>
-                {rateLimitInfo.remaining} {t("profile.requestsRemaining")}
-                {rateLimitInfo.resetTimeHours > 0 && (
-                  <span className="text-xs block">
-                    {t("profile.resetsIn")} {rateLimitInfo.resetTimeHours}h
-                  </span>
-                )}
-              </span>
-            </div>
-          )}
         </div>
       </div>
 
