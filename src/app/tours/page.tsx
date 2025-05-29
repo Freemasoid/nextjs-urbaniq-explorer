@@ -27,7 +27,7 @@ const ToursPage: React.FC = () => {
   );
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl pb-20 sm:pb-0">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 rounded-full bg-primary/10">
           <MapPin className="text-primary h-6 w-6" />
