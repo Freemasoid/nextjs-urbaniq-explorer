@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Send, MessageSquare, Clock } from "lucide-react";
 import { useTranslation } from "@/i18n/useTranslation";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ interface Message {
 const Chat: React.FC = () => {
   const [input, setInput] = useState("");
   const { t } = useTranslation();
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const {
     isOpen: isWelcomeOpen,
     isLoading: isWelcomeLoading,
@@ -40,6 +41,13 @@ const Chat: React.FC = () => {
       timestamp: new Date(),
     },
   ]);
+
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (userMessage: Message) => {
@@ -115,7 +123,10 @@ const Chat: React.FC = () => {
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto py-6 px-1 md:px-4 space-y-6">
+        <div
+          ref={messagesContainerRef}
+          className="flex-1 overflow-y-auto  py-3 space-y-6  scroll-smooth"
+        >
           {messages.map((message, index) => {
             const isFirstMessageOfGroup =
               index === 0 || messages[index - 1].sender !== message.sender;
