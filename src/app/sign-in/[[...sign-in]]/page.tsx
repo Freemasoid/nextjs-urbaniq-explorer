@@ -3,17 +3,33 @@
 import { SignIn } from "@clerk/nextjs";
 import { useTranslation } from "@/i18n/useTranslation";
 import { toast } from "@/components/ui";
-import { useRouter } from "next/navigation";
-import { useSignIn } from "@clerk/nextjs";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useSignIn, useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui";
 
 function SignInPage() {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const { signIn, setActive: setSignInActive, isLoaded } = useSignIn();
+  const {
+    signIn,
+    setActive: setSignInActive,
+    isLoaded: isSignInLoaded,
+  } = useSignIn();
+  const { isLoaded: isAuthLoaded, isSignedIn } = useAuth();
+
+  // Determine if the entire page is ready to be displayed
+  const isPageReady = isSignInLoaded && isAuthLoaded;
+
+  // Redirect if already signed in
+  if (isPageReady && isSignedIn) {
+    const redirectUrl = searchParams.get("redirect_url") || "/chat";
+    router.push(redirectUrl);
+    return null;
+  }
 
   const handleDemoLogin = async () => {
-    if (!isLoaded) return;
+    if (!isSignInLoaded) return;
 
     try {
       const result = await signIn.create({
@@ -22,8 +38,10 @@ function SignInPage() {
       });
 
       if (result.status === "complete") {
-        setSignInActive({ session: result.createdSessionId });
-        router.push("/chat");
+        await setSignInActive({ session: result.createdSessionId });
+
+        const redirectUrl = searchParams.get("redirect_url") || "/chat";
+        window.location.href = redirectUrl;
       }
 
       toast.success(t("auth.demoLoginDescription"));
@@ -32,6 +50,19 @@ function SignInPage() {
       toast.error(t("auth.errorDemoLogin"));
     }
   };
+
+  // Loading indicator while Clerk is initializing
+  if (!isPageReady) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-pulse flex space-x-2">
+          <div className="w-3 h-3 bg-primary rounded-full"></div>
+          <div className="w-3 h-3 bg-primary rounded-full"></div>
+          <div className="w-3 h-3 bg-primary rounded-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
