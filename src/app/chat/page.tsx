@@ -49,6 +49,24 @@ const Chat: React.FC = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    setMessages((prevMessages) => {
+      const updatedMessages = [...prevMessages];
+      const initialMessageIndex = updatedMessages.findIndex(
+        (msg) => msg.id === "1" && msg.sender === "ai"
+      );
+
+      if (initialMessageIndex !== -1) {
+        updatedMessages[initialMessageIndex] = {
+          ...updatedMessages[initialMessageIndex],
+          content: t("chat.assist"),
+        };
+      }
+
+      return updatedMessages;
+    });
+  }, [t]);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (userMessage: Message) => {
       const chatMessages = messages.map((msg) => ({
